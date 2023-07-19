@@ -1,0 +1,19 @@
+@charset "UTF-8";
+@use "sass:math";
+@use "../global" as *;
+
+/*
+font-size
+-----------------------------------------------------*/
+
+@each $device, $breakpoint in $breakpoints {
+    @media screen and (min-width: #{$breakpoint}px) {
+        @for $i from 0 through $space-range {
+            // font-size
+            // ----------------------------
+            [data-fz~="#{$device}:#{$i}"] {
+                font-size: rem($i);
+            }
+        }
+    }
+}
