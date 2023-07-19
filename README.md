@@ -16,11 +16,10 @@
 
 
 ### Sassについて
-sass -- base    ・・・ 初期状態化のscss（reset.css）
-     |- global  ・・・ レスポンシブの記述や基本的な@mixinの記述
-     |- layout　・・・ flex, margin, padding, font-sizeの簡易記述処理（grid作成中）
-     |- module 
-     |- page   
+base    ・・・ 初期状態化のscss（reset.css）
+global  ・・・ レスポンシブの記述や基本的な@mixinの記述
+layout　・・・ flex, margin, padding, font-sizeの簡易記述処理（grid作成中）
+module, page   
 
 module, pageは案件ごとに使い分け
 自由に使用してください。
