@@ -57,14 +57,14 @@ $breakpoints: (
 
 //メディアクエリー
 $mediaquerys: (
-  min: "screen and (max-width: #{map-get($breakpoints,'min')}px)",
-  xxs: "screen and (max-width: #{map-get($breakpoints,'xxs')}px)",
-  xs: "screen and (max-width: #{map-get($breakpoints,'lg')}px)",
-  sm: "screen and (max-width: #{map-get($breakpoints,'sm')}px)",
-  md: "screen and (max-width: #{map-get($breakpoints,'md')}px)",
-  lg: "screen and (max-width: #{map-get($breakpoints,'lg')}px)",
-  xl: "screen and (max-width: #{map-get($breakpoints,'xl')}px)",
-  xxl: "screen and (max-width: #{map-get($breakpoints,'xxl')}px)",
+  min: "screen and (min-width: #{map-get($breakpoints,'min')}px)",
+  xxs: "screen and (min-width: #{map-get($breakpoints,'xxs')}px)",
+  xs: "screen and (min-width: #{map-get($breakpoints,'lg')}px)",
+  sm: "screen and (min-width: #{map-get($breakpoints,'sm')}px)",
+  md: "screen and (min-width: #{map-get($breakpoints,'md')}px)",
+  lg: "screen and (min-width: #{map-get($breakpoints,'lg')}px)",
+  xl: "screen and (min-width: #{map-get($breakpoints,'xl')}px)",
+  xxl: "screen and (min-width: #{map-get($breakpoints,'xxl')}px)",
 );
 
 // @include mq(){}で書くとブレークポイントが反映される（初期値はmd）
@@ -86,20 +86,20 @@ $mediaquerys: (
 
 //768px以上を表示
 .u-desktop {
-  display: block;
-  @include mq("md") {
-    display: none;
-  }
-}
-
-//モバイルのみ表示
-.u-mobile {
   display: none;
   @include mq("md") {
     display: block;
   }
 }
 
+//モバイルのみ表示
+.u-mobile {
+  @include mq("md") {
+    display: none;
+  }
+}
+
 // 余白
 $space: 8;
+
 $space-range: 30;
