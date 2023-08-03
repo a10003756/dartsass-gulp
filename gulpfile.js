@@ -7,7 +7,7 @@ const rename = require("gulp-rename");
 const srcPath = {
     css: 'src/sass/**/*.scss',
     img: 'src/images/**/*',
-    html: './**/*.html'
+    html: './**/*.html',
 }
 
 // 吐き出し先（なければ生成される）
@@ -64,10 +64,36 @@ const cssSass = () => {
         .pipe(sourcemaps.write('./'))
         .pipe(dest(destPath.css))
         .pipe(notify({
-            message: 'コンパイル出来たよ！',//文字は好きなものに変更してね！
+            message: 'OK!!!',
             onLast: true
         }))
 }
+
+const cssMin = () => {
+    return src(srcPath.css)
+        .pipe(sourcemaps.init())
+        .pipe(sassGlob())
+        .pipe(sass.sync({
+            includePaths: ['src/sass'],
+            outputStyle: 'expanded'
+        }))        
+        .pipe(cleanCSS()) // css 圧縮
+        .pipe(
+        rename({
+            extname: '.min.css',
+        })
+        ) // .min.css にリネーム
+        .pipe(dest(destPath.css)) // min.css 出力
+        .pipe(sourcemaps.write('./'))
+        .pipe(
+        notify({
+            title: 'compiled!',
+            message: new Date(),
+            sound: 'Pop',
+        })
+    );
+}
+
 
 // 画像圧縮
 const imagemin = require("gulp-imagemin");
@@ -100,39 +126,20 @@ const imgWebp = () => {
 const watchFiles = () => {
     watch(srcPath.css, series(cssSass, browserSyncReload))
     watch(srcPath.img, series(imgWebp, browserSyncReload))
+    watch(srcPath.css, series(cssMin, browserSyncReload))
     watch(srcPath.html, series(browserSyncReload))
 }
 
 // 画像だけ削除
 const del = require('del');
 const delPath = {
-    // css: '../dist/css/',
-    // js: '../dist/js/script.js',
-    // jsMin: '../dist/js/script.min.js',
     img: './images/',
-    // html: '../dist/*.html',
-    // wpcss: `../${themeName}/assets/css/`,
-    // wpjs: `../${themeName}/assets/js/script.js`,
-    // wpjsMin: `../${themeName}/assets/js/script.min.js`,
-    // wpImg: `../${themeName}/assets/images/`
 }
 const clean = (done) => {
     del(delPath.img, { force: true, });
-    // del(delPath.css, { force: true, });
-    // del(delPath.js, { force: true, });
-    // del(delPath.jsMin, { force: true, });
-    // del(delPath.html, { force: true, });
-    // del(delPath.wpcss, { force: true, });
-    // del(delPath.wpjs, { force: true, });
-    // del(delPath.wpjsMin, { force: true, });
-    // del(delPath.wpImg, { force: true, });
     done();
 };
 
 
 // npx gulpで出力する内容
-exports.default = series(series(clean, cssSass, imgWebp), parallel(watchFiles, browserSyncFunc));
-
-
-// npx gulp del → 画像最適化（重複を削除）
-// exports.del = series(series(clean, cssSass, imgImagemin), parallel(watchFiles, browserSyncFunc));
+exports.default = series(series(clean, cssSass, imgWebp, cssMin), parallel(watchFiles, browserSyncFunc));
