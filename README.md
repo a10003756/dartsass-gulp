@@ -32,9 +32,11 @@ module →　複数のページや箇所で使用するモジュールのcss記�
 
 スマホファーストのコーディングをしているためレスポンシブについては、
 @include mq(md) {
+
 }
 ↓
 @media screen and (min-width: 768px) {
+
 }
 を僕は多用しています。
 
