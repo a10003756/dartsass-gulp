@@ -31,13 +31,9 @@ module →　複数のページや箇所で使用するモジュールのcss記�
 コンテンツ幅、フォント主に使用するカラー, ブレイクポイントなどの指定
 
 スマホファーストのコーディングをしているためレスポンシブについては、
-@include mq(md) {
-
-}
+@include mq(md) {}
 ↓
-@media screen and (min-width: 768px) {
-
-}
+@media screen and (min-width: 768px) {}
 を僕は多用しています。
 
 font-sizeはレスポンシブを考慮して、remで指定をしています。
